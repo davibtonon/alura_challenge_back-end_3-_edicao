@@ -22,5 +22,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+    path('importa_transacoes/', views.importa_transacoes, name='importa_transacoes' )
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # conf arquivos estaticos.
