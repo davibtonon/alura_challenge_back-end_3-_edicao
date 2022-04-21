@@ -1,5 +1,5 @@
 from django import forms
-from controller.models import Transacao
+from controller.models import Transacao, ImportacaoRealizada
 from django.core.validators import FileExtensionValidator
 
 
@@ -8,9 +8,8 @@ class FormFileUpload(forms.Form):
     arquivo = forms.FileField(validators=[FileExtensionValidator(['csv'])])
 
 
-class TranscaoForms(forms.ModelForm):
+class FormImportacoesRealizadas(forms.ModelForm):
     class Meta:
-        model = Transacao
+        model = ImportacaoRealizada
         fields = '__all__'
 
-     

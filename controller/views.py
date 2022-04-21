@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from controller import transacoes
 from controller.form import FormFileUpload
+from controller.models import ImportacaoRealizada
 from controller.transacoes import importa_arquivo_e_salva_transacoes
 # Create your views here.
 
@@ -15,12 +17,16 @@ def importa_transacoes(request):
             print('Arquivo valido')
             file = request.FILES['arquivo']
             importa_arquivo_e_salva_transacoes(file, form)
-           
-            return render(request, 'index.html', {'form': form})
+            if not form.has_error('arquivo'):
+                transacoes_importadas = ImportacaoRealizada.objects.all()
+                return render(
+                    request, 
+                    'transacoes_importadas.html', 
+                    {'transacoes_importadas':transacoes_importadas})
+
         else:
             print('Arquivo Invalido')
-            print(form.errors.as_data())
-            print(form.non_field_errors())
-            return render(request, 'index.html', {'form': form})
+        
+        return render(request, 'index.html', {'form': form})
 
 

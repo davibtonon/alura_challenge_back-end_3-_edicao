@@ -1,5 +1,5 @@
 from django.contrib import admin
-from controller.models import Transacao
+from controller.models import Transacao, ImportacaoRealizada
 
 
 # Register your models here.
@@ -12,4 +12,10 @@ class ListandoTransacoes(admin.ModelAdmin):
         'valor_transacao',
         'data']
 
+
+class ListandoImportacaoRealizada(admin.ModelAdmin):
+    list_display = ['data_transacao', 'data_importacao']
+
+
 admin.site.register(Transacao, ListandoTransacoes)
+admin.site.register(ImportacaoRealizada, ListandoImportacaoRealizada)

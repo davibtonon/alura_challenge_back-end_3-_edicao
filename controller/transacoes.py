@@ -1,4 +1,4 @@
-from controller.models import Transacao
+from controller.models import Transacao, ImportacaoRealizada
 from django.core.exceptions import ValidationError
 from django.utils.timezone import make_aware
 from datetime import datetime
@@ -63,4 +63,5 @@ def importa_arquivo_e_salva_transacoes(file, form):
         else:
             print('As datas são diferentes')
              
-   
+    ImportacaoRealizada(data_transacao=data_inicial.date()).save()
+
