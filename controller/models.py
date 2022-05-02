@@ -6,7 +6,6 @@ from django.utils import timezone
 class Transacao(models.Model):
     """Modelo de transação para salva no banco de dados"""
 
-
     banco_origem = models.CharField(max_length=100)
     agencia_origem = models.CharField(max_length=15)
     conta_origem = models.CharField(max_length=7)
@@ -17,7 +16,6 @@ class Transacao(models.Model):
     data = models.DateTimeField()
 
    
-
 class ImportacaoRealizada(models.Model):
     """ Modelo de importações realizadas para salva no banco de dados"""
 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Cadastros de Usuarios </h1>
+<form action="{% url 'cadastro' %}" method="POST">
+    {% csrf_token %}
+    {% include 'partials/_alertas.html' %}
+    <div class="row">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="nome">Nome</label>
+            <input type="text" class="form-control" name="nome" placeholder="Jose das Cloves" required>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="email">Email</label>
+            <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Cadastra</button>
+    </div>
+</form>
+{% endblock content %}

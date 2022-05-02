@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Usuarios Cadastrados </h1>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>NOME</th>
+        <th>EMAIL</th>
+        <th>OPCAO</th>
+    </tr>
+    {% for usuario in usuarios %}
+    <tr>
+        <td> {{ usuario.id }} </td>
+        <td> {{ usuario.username }} </td>
+        <td> {{ usuario.email }} </td>
+        <td>  
+            <a type="button" class="btn btn-primary" href="{% url 'edita_usuario' usuario.id %}">Editar</a>
+            <a type="button" class="btn btn-danger"  href="{% url 'deleta_usuario' usuario.id %}">Deleta</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

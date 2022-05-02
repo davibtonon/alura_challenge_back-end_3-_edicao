@@ -1,0 +1,19 @@
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        {% if user.is_authenticated %}
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href={% url 'index' %} class="nav-link px-2 link-dark">Pagina Inicial</a></li>
+            <li><a href={% url 'lista_usuarios' %} class="nav-link px-2 link-dark">Usuarios</a></li>
+            <li><a href={% url 'transacoes_importadas' %} class="nav-link px-2 link-dark">Transações</a></li>
+        </ul>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-end mb-md-0">
+            <li><a class="nav-link px-2 link-dark">Ola, {{ user.username }}</a></li>
+            <li><a href={% url 'logout_usuario' %} class="nav-link px-2 link-dark me-2">sair</a></li>
+        </ul>
+        {% else %}
+        <div class="col-md-3 text-end">
+            <a href={% url 'login' %} type="button" class="btn btn-outline-primary me-2">Login</a>
+            <a href={% url 'cadastro' %} type="button" class="btn btn-primary">Cadastro</a>
+        {% endif %}
+    </header>
+</div>

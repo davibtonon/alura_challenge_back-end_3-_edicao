@@ -2,6 +2,7 @@ from controller.models import Transacao, ImportacaoRealizada
 from django.core.exceptions import ValidationError
 from django.utils.timezone import make_aware
 from datetime import datetime
+from django.core.mail import send_mail
 
 def importa_arquivo_e_salva_transacoes(file, form):
     """
@@ -65,3 +66,11 @@ def importa_arquivo_e_salva_transacoes(file, form):
              
     ImportacaoRealizada(data_transacao=data_inicial.date()).save()
 
+def envia_email(nome, email, senha):
+  
+    message = f'Ola, {nome} sua senha de acesso é {senha}'
+    subject = 'Cadastro realizado com sucesso'
+    from_email = 'django_servidor@gmail.com'
+    recipient_list = [email]
+
+    send_mail(subject, message, from_email, recipient_list )

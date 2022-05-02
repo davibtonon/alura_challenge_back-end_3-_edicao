@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load widget_tweaks %}
+<h1>Editar Usuarios</h2>
+<form action="{% url 'atualiza_usuario' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" id="id" class="form-control" name="id" value="{{usuario.id}}" required hidden>
+    <div class="input-group mb-2">
+        <span class="input-group-text"  for="nome">Nome</span>
+        <input type="text" id="nome" class="form-control" name="nome" value="{{usuario.username}}" required>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text"  for="email">Email</span>
+        <input type="text" id="email" class="form-control" name="email" value="{{usuario.email}}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Salva</button>
+</form>
+{% endblock %}  
