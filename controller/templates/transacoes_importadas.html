@@ -1,20 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
+<h1> DETALHES DA IMPORTACAO</h1>
 
-<h1> IMPORTAÇÕES REALIZADAS </h1>
-<table class="table table-striped">
-    <tr>
-        <th>DATA TRANSAÇÕES </th>
-        <th>DATA IMPORTAÇÃO </th>
-        <th>USUARIO<th>
-    </tr>
-    {% for transacao in transacoes_importadas %}
-    <tr>
-        <td> {{ transacao.data_transacao }} </td>
-        <td> {{ transacao.data_importacao }} </td>
-        <td> {{ transacao.usuario.username }} </td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card text-r">
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" id="data_importacao">Importado em:  </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control-plaintext" aria-describedby="data_importacao" disabled readonly value="{{ importacao.data_importacao }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" id="usuario">Importado por:  </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control-plaintext" aria-describedby="usuario" disabled readonly value="{{ importacao.data_importacao.usuario }}">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" id="data_transacao">Data transações:  </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control-plaintext" aria-describedby="data_transacao" disabled readonly value="{{ importacao.data_transacao }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-2">
+    <table class=" table align-middle table-striped table-hover">
+        <tr class="align-center">
+            <th colspan="3">Origem</th>
+            <th colspan="3">Destino</th>
+            <th rowspan="2">Valor</th>
+        </tr>
+        <tr>
+            <th>Banco</th>
+            <th>Agência</th>
+            <th>Conta</th>
+            <th>Banco</th>
+            <th>Agência</th>
+            <th>Conta</th>
+        </tr>
+      
+
+      </table>
+</div>
+
+
 {% endblock %}
-

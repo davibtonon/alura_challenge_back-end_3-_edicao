@@ -4,7 +4,8 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href={% url 'index' %} class="nav-link px-2 link-dark">Pagina Inicial</a></li>
             <li><a href={% url 'lista_usuarios' %} class="nav-link px-2 link-dark">Usuarios</a></li>
-            <li><a href={% url 'transacoes_importadas' %} class="nav-link px-2 link-dark">Transações</a></li>
+            <li><a href={% url 'importacoes_realizadas' %} class="nav-link px-2 link-dark">Importações Realizadas</a></li>
+            
         </ul>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-end mb-md-0">
             <li><a class="nav-link px-2 link-dark">Ola, {{ user.username }}</a></li>

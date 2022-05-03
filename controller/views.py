@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from controller.form import FormFileUpload
-from controller.models import ImportacaoRealizada
+from controller.models import ImportacaoRealizada, Transacao
 from controller.transacoes import importa_arquivo_e_salva_transacoes
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -76,14 +76,14 @@ def index(request):
     return render(request, 'index.html', {'form': form})
 
 @login_required
-def transacoes_importadas(request):
+def importacoes_realizadas(request):
     """Exibir todas as importações realizadas"""
 
-    transacoes = ImportacaoRealizada.objects.all()
+    importacoes = ImportacaoRealizada.objects.all()
     return render(
         request, 
-        'transacoes_importadas.html', 
-        {'transacoes_importadas':transacoes})
+        'importacoes_realizadas.html', 
+        {'importacoes_realizadas':importacoes})
 
 @login_required
 def lista_usuarios(request):
@@ -127,3 +127,16 @@ def logout_usuario(request):
 
     auth.logout(request)
     return redirect('login')
+
+def transacoes_importadas(request, importacao_id):
+
+ 
+    importacao = ImportacaoRealizada.objects.get(id=importacao_id)
+    print(importacao.data_transacao)
+    transacoes = Transacao.objects.get(data=importacao.data_transacao)
+    contexto = {
+        'importacao': importacao,
+        'transacoes': transacoes
+    }
+    print(importacao_id)
+    return render(request, 'transacoes_importadas.html', contexto )

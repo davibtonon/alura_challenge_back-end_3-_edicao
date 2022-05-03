@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> IMPORTAÇÕES REALIZADAS </h1>
+<table class="table table-striped">
+    <tr>
+        <th>DATA TRANSAÇÕES </th>
+        <th>DATA IMPORTAÇÃO </th>
+        <th>USUARIO</th>
+        <th>OPÇÕES</th>
+    </tr>
+    {% for importacao in importacoes_realizadas %}
+    <tr>
+        <td> {{ importacao.data_transacao }} </td>
+        <td> {{ importacao.data_importacao }} </td>
+        <td> {{ importacao.usuario.username }} </td>
+        <td> <a type="button" class="btn btn-primary" href="{% url 'transacoes_importadas'  importacao.id %}">Detalhes</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
