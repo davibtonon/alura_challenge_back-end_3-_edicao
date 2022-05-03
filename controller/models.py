@@ -1,6 +1,6 @@
 from django.db import models
-from datetime import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Transacao(models.Model):
@@ -21,3 +21,4 @@ class ImportacaoRealizada(models.Model):
 
     data_transacao = models.DateField()
     data_importacao = models.DateTimeField(default=timezone.now)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)

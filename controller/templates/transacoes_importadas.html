@@ -6,11 +6,13 @@
     <tr>
         <th>DATA TRANSAÇÕES </th>
         <th>DATA IMPORTAÇÃO </th>
+        <th>USUARIO<th>
     </tr>
     {% for transacao in transacoes_importadas %}
     <tr>
         <td> {{ transacao.data_transacao }} </td>
         <td> {{ transacao.data_importacao }} </td>
+        <td> {{ transacao.usuario.username }} </td>
     </tr>
     {% endfor %}
 </table>

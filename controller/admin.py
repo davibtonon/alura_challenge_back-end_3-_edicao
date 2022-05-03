@@ -1,7 +1,6 @@
 from django.contrib import admin
 from controller.models import Transacao, ImportacaoRealizada
 
-
 # Register your models here.
 class ListandoTransacoes(admin.ModelAdmin):
     list_display = [

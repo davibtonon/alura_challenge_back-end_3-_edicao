@@ -4,7 +4,7 @@ from django.utils.timezone import make_aware
 from datetime import datetime
 from django.core.mail import send_mail
 
-def importa_arquivo_e_salva_transacoes(file, form):
+def importa_arquivo_e_salva_transacoes(file, form, user):
     """
     Salva as transacoes bancarias de um arquivo csv.
     Caso o arquivo e as transações sejam validas"""
@@ -64,7 +64,7 @@ def importa_arquivo_e_salva_transacoes(file, form):
         else:
             print('As datas são diferentes')
              
-    ImportacaoRealizada(data_transacao=data_inicial.date()).save()
+    ImportacaoRealizada(data_transacao=data_inicial.date(), usuario=user).save()
 
 def envia_email(nome, email, senha):
   

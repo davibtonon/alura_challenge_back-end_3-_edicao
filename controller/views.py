@@ -58,14 +58,14 @@ def cadastro(request):
 @login_required
 def index(request):
     """Função para importação dos arquivos CSV."""
-
     if request.method == 'POST':
         form = FormFileUpload(request.POST, request.FILES)
+        user = request.user
         if form.is_valid():
             print('Arquivo valido')
             file = request.FILES['arquivo']
             #Ler o arquivo e carrega no banco de dados
-            importa_arquivo_e_salva_transacoes(file, form)
+            importa_arquivo_e_salva_transacoes(file, form, user)
             if not form.has_error('arquivo'):
                 return redirect('transacoes_importadas')
         else:
@@ -90,6 +90,7 @@ def lista_usuarios(request):
     """Exibir todos os usuarios cadastros no sistema"""
     
     usuarios = User.objects.all().exclude(email='admin@email.com.br')
+    
     return render(request, 'lista_usuarios.html', {'usuarios': usuarios})
 
 @login_required
