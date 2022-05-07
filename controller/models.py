@@ -14,11 +14,11 @@ class Transacao(models.Model):
     conta_destino = models.CharField(max_length=7)
     valor_transacao = models.FloatField()
     data = models.DateTimeField()
-
+    usuario = models.ForeignKey(User, on_delete=models.PROTECT)
    
 class ImportacaoRealizada(models.Model):
     """ Modelo de importações realizadas para salva no banco de dados"""
 
     data_transacao = models.DateField()
     data_importacao = models.DateTimeField(default=timezone.now)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.PROTECT)

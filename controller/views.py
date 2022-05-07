@@ -67,7 +67,7 @@ def index(request):
             #Ler o arquivo e carrega no banco de dados
             importa_arquivo_e_salva_transacoes(file, form, user)
             if not form.has_error('arquivo'):
-                return redirect('transacoes_importadas')
+                return redirect('importacoes_realizadas')
         else:
             print('Arquivo Invalido')
     else:
@@ -88,8 +88,10 @@ def importacoes_realizadas(request):
 @login_required
 def lista_usuarios(request):
     """Exibir todos os usuarios cadastros no sistema"""
-    
-    usuarios = User.objects.all().exclude(email='admin@email.com.br')
+    usuario_email = request.user.email
+    usuarios = User.objects.all().exclude(
+        email='admin@email.com.br').exclude(
+        email=usuario_email).exclude(is_active=False)
     
     return render(request, 'lista_usuarios.html', {'usuarios': usuarios})
 
@@ -105,7 +107,9 @@ def edita_usuario(request, usuario_id):
 def deleta_usuario(request, usuario_id):
     """Deleta um usuario do banco de dados"""
 
-    User.objects.filter(pk=usuario_id).delete()
+    user = User.objects.get(pk=usuario_id)
+    user.is_active = False
+    user.save()
     return redirect('lista_usuarios')
 
 @login_required

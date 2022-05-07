@@ -52,7 +52,8 @@ def importa_arquivo_e_salva_transacoes(file, form, user):
                 agencia_destino=lista_transacoes[4], 
                 conta_destino=lista_transacoes[5], 
                 valor_transacao=lista_transacoes[6],
-                data=data)
+                data=data,
+                usuario=user)
         
         # Verificar se a data da primeira linha é igual a linha atual
         if data.date() == data_inicial.date():
