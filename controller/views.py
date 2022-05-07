@@ -133,7 +133,7 @@ def transacoes_importadas(request, importacao_id):
  
     importacao = ImportacaoRealizada.objects.get(id=importacao_id)
     print(importacao.data_transacao)
-    transacoes = Transacao.objects.get(data=importacao.data_transacao)
+    transacoes = Transacao.objects.filter(data__date=importacao.data_transacao)
     contexto = {
         'importacao': importacao,
         'transacoes': transacoes
