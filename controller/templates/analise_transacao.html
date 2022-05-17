@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Análise de Transações Suspeitas    </h1>
+
+<form action="{% url 'analise_transacao' %}" method='POST'>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-5">
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon1">Selecione o mês</span>
+                <input type="month" class="form-control" name="mes_procura" required>
+            </div>
+        </div>
+    </div>
+    <button type="submity" class="btn btn-primary mt-3">Realizar análise</button>
+</form>
+
+
+<div class="row mt-4">
+    <h2 class="mb-4 center">Transações Suspeitas</h2>
+    <table class=" table table-secondary align-middle table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="align-middle" colspan="3">Origem</th>
+                <th class="align-middle" colspan="3">Destino</th>
+                <th class="align-middle" rowspan="2">Valor</th>
+            </tr>
+            <tr>
+                <th>Banco</th>
+                <th>Agência</th>
+                <th>Conta</th>
+                <th>Banco</th>
+                <th>Agência</th>
+                <th>Conta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transacao in transacoes %}
+            <tr>
+                <td>{{transacao.banco_origem}}</td>
+                <td>{{transacao.agencia_origem}}</td>
+                <td>{{transacao.conta_origem}}</td>
+                <td>{{transacao.banco_destino}}</td>
+                <td>{{transacao.agencia_destino}}</td>
+                <td>{{transacao.conta_destino}}</td>
+                <td>{{transacao.valor_transacao}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

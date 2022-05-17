@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from controller.form import FormFileUpload
 from controller.models import ImportacaoRealizada, Transacao
-from controller.transacoes import importa_arquivo_e_salva_transacoes
+from controller.transacoes import importa_arquivo_e_salva_transacoes, procura_agencias_suspeitas
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -144,3 +144,22 @@ def transacoes_importadas(request, importacao_id):
     }
     print(importacao_id)
     return render(request, 'transacoes_importadas.html', contexto )
+
+def analise_transacao(request):
+    if request.method == 'POST':
+        mes_procura = request.POST['mes_procura']
+        mes_procura = int(mes_procura[5:])
+        valor_transacao_suspeita = 18000
+        valor_agencia_suspeita = 10000
+        agencias = procura_agencias_suspeitas(mes_procura)
+        transacoes = Transacao.objects.filter(
+            data__month=mes_procura,
+            valor_transacao__gte = valor_transacao_suspeita)
+        contexto = {
+            'transacoes': transacoes,   
+            'agencias':agencias
+        }
+      
+        return render(request, 'analise_transacao.html', contexto)
+
+    return render(request, 'analise_transacao.html')

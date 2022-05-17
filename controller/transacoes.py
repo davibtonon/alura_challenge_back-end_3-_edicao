@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.timezone import make_aware
 from datetime import datetime
 from django.core.mail import send_mail
+from django.db.models import Sum, F 
 
 def importa_arquivo_e_salva_transacoes(file, form, user):
     """
@@ -75,3 +76,15 @@ def envia_email(nome, email, senha):
     recipient_list = [email]
 
     send_mail(subject, message, from_email, recipient_list )
+
+def procura_agencias_suspeitas(mes_procura, tipo:str='origem' ):
+
+    agencia = 'agencia_' + tipo
+    banco = 'banco_' + tipo
+    valor_suspeito = 100
+    transacoes = Transacao.objects.values(agencia, banco)\
+        .annotate(valor_movimentacao_mes=Sum('valor_transacao'))\
+        .filter(
+            valor_movimentacao_mes__gte=valor_suspeito,
+            data__month=mes_procura)
+    [print(t) for t in transacoes]

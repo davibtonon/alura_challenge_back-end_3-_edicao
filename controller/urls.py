@@ -12,4 +12,5 @@ urlpatterns = [
     path('usuarios/deleta/<int:usuario_id>', views.deleta_usuario, name='deleta_usuario'),
     path('usuarios/atualiza', views.atualiza_usuario, name='atualiza_usuario'),
     path('transacoes_importadas/<int:importacao_id>', views.transacoes_importadas, name='transacoes_importadas'),
+    path('analise_transacao/', views.analise_transacao, name='analise_transacao'),
 ]
