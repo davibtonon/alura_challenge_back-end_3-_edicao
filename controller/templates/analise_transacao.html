@@ -35,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for transacao in transacoes %}
+            {% for transacao in transacoes_suspeitas %}
             <tr>
                 <td>{{transacao.banco_origem}}</td>
                 <td>{{transacao.agencia_origem}}</td>
@@ -48,5 +48,75 @@
             {% endfor %}
         </tbody>
     </table>
+
+
+<div class="row mt-4">
+<h2 class="mb-4 center">Transações Suspeitas</h2>
+<table class=" table table-secondary align-middle table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Banco</th>
+            <th>Agência</th>
+            <th>Conta</th>
+            <th>Valor Movimentado</th>
+            <th>Tipo</th>
+        </tr>
+    </thead>
+    <tbody>
+     
+        {% for contas in contas_suspeitas %}
+            {% for conta in contas %}
+            <tr>
+                {% if 'agencia_origem' in conta %}
+                <td>{{conta.banco_origem}}</td>
+                <td>{{conta.agencia_origem}}</td>
+                <td>{{conta.conta_origem}}</td>
+                <td>{{conta.valor_movimentacao_mes}}</td>
+                <td>Saida</td>
+                {% else %}
+                <td>{{conta.banco_destino}}</td>
+                <td>{{conta.agencia_destino}}</td>
+                <td>{{agencia.agencia_origem}}</td>
+                <td>{{conta.valor_movimentacao_mes}}</td>
+                <td>Entrada</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            {% endfor %}
+    </tbody>
+</table>
+<div class="row mt-4">
+    <h2 class="mb-4 center">Agência Suspeitas</h2>
+    <table class=" table table-secondary align-middle table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Banco</th>
+                <th>Agência</th>
+                <th>Valor Movimentando</th>
+                <th>Tipo Movimentação</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for agencias in agencias_suspeitas %}
+            {% for agencia in agencias %}
+            <tr>
+                {% if 'agencia_origem' in agencia %}
+                    <td>{{agencia.agencia_origem}}</td>
+                    <td>{{agencia.banco_origem}}</td>
+                    <td>{{agencia.valor_movimentacao_mes}}</td>
+                    <td>Saida</td>
+                {% else %}
+                    <td>{{agencia.agencia_destino}}</td>
+                    <td>{{agencia.banco_destino}}</td>
+                    <td>{{agencia.valor_movimentacao_mes}}</td>
+                    <td>Entrada</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            {% endfor %}
+
+            
+        </tbody>
 
 {% endblock %}

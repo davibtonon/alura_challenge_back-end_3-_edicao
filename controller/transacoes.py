@@ -5,6 +5,7 @@ from datetime import datetime
 from django.core.mail import send_mail
 from django.db.models import Sum, F 
 
+
 def importa_arquivo_e_salva_transacoes(file, form, user):
     """
     Salva as transacoes bancarias de um arquivo csv.
@@ -77,6 +78,15 @@ def envia_email(nome, email, senha):
 
     send_mail(subject, message, from_email, recipient_list )
 
+def procura_transacoes_suspeitas(mes_procura):
+    valor_transacao_suspeita = 10000
+    transacoes_suspeitas = Transacao.objects.filter(
+            data__month=mes_procura,
+            valor_transacao__gte = valor_transacao_suspeita)
+    
+    return transacoes_suspeitas
+
+
 def procura_agencias_suspeitas(mes_procura, tipo:str='origem' ):
 
     agencia = 'agencia_' + tipo
@@ -87,4 +97,19 @@ def procura_agencias_suspeitas(mes_procura, tipo:str='origem' ):
         .filter(
             valor_movimentacao_mes__gte=valor_suspeito,
             data__month=mes_procura)
-    [print(t) for t in transacoes]
+  
+    return transacoes
+
+def procura_contas_suspeitas(mes_procura, tipo:str='destino'):
+    valor_suspeito = 100
+    conta = 'conta_' + tipo
+    banco = 'banco_' + tipo
+    agencia = 'agencia_' + tipo
+
+    transacoes = Transacao.objects.values(banco, agencia, conta)\
+        .annotate(valor_movimentacao_mes=Sum('valor_transacao'))\
+        .filter(
+        valor_movimentacao_mes__gte=valor_suspeito,
+        data__month=mes_procura)
+    
+    return transacoes

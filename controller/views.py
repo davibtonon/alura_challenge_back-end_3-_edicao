@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from controller.form import FormFileUpload
 from controller.models import ImportacaoRealizada, Transacao
-from controller.transacoes import importa_arquivo_e_salva_transacoes, procura_agencias_suspeitas
+from controller.transacoes import importa_arquivo_e_salva_transacoes, procura_agencias_suspeitas, procura_contas_suspeitas, procura_transacoes_suspeitas
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -52,7 +52,6 @@ def cadastro(request):
         return redirect('cadastro')
     else:  
         return render(request, 'cadastros.html')
-
 
 # PARA UM USUARIO USAR AS FUNÇÕES ABAIXO, ELE PRECISA ESTÁ LOGADO NO SISTEMA
 @login_required
@@ -133,8 +132,8 @@ def logout_usuario(request):
     return redirect('login')
 
 def transacoes_importadas(request, importacao_id):
+    """Exibir todas a importações realizadas no dia selecionado"""
 
- 
     importacao = ImportacaoRealizada.objects.get(id=importacao_id)
     print(importacao.data_transacao)
     transacoes = Transacao.objects.filter(data__date=importacao.data_transacao)
@@ -145,19 +144,26 @@ def transacoes_importadas(request, importacao_id):
     print(importacao_id)
     return render(request, 'transacoes_importadas.html', contexto )
 
+@login_required
 def analise_transacao(request):
+    """Relatorio para analise de transações realizadas no mês"""
+    
     if request.method == 'POST':
         mes_procura = request.POST['mes_procura']
         mes_procura = int(mes_procura[5:])
-        valor_transacao_suspeita = 18000
-        valor_agencia_suspeita = 10000
-        agencias = procura_agencias_suspeitas(mes_procura)
-        transacoes = Transacao.objects.filter(
-            data__month=mes_procura,
-            valor_transacao__gte = valor_transacao_suspeita)
+        transacoes_suspeitas = procura_transacoes_suspeitas(mes_procura)
+        agencias_suspeitas = [
+            procura_agencias_suspeitas(mes_procura, 'destino'),
+            procura_agencias_suspeitas(mes_procura)
+            ]
+        contas_suspeitas = [
+            procura_contas_suspeitas(mes_procura),
+            procura_contas_suspeitas(mes_procura,'origem')]
+        
         contexto = {
-            'transacoes': transacoes,   
-            'agencias':agencias
+            'transacoes_suspeitas': transacoes_suspeitas,   
+            'agencias_suspeitas':agencias_suspeitas,
+            'contas_suspeitas': contas_suspeitas
         }
       
         return render(request, 'analise_transacao.html', contexto)
