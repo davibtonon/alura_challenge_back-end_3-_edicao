@@ -1,3 +1,4 @@
+import xml.etree.ElementTree as ET
 from controller.models import Transacao, ImportacaoRealizada
 from django.core.exceptions import ValidationError
 from django.utils.timezone import make_aware
@@ -8,22 +9,26 @@ from django.db.models import Sum, F
 
 def importa_arquivo_e_salva_transacoes(file, form, user):
     """
-    Salva as transacoes bancarias de um arquivo csv.
+    Salva as transacoes bancarias de um arquivo csv e xml.
     Caso o arquivo e as transações sejam validas"""
-
+    
+    is_xml = 'xml' in file.name
     size = file.size/1048576
     data_inicial = None
     datas_transacoes = None
     print('Nome:', file.name)
     print('Tamanho (MB): {:.2f}'.format( size)) 
-
+    if is_xml:
+        file = ler_arquivo_xml(file)
+    
     for line in file:
+        lista_transacoes = line
+        if not is_xml:
+            # Usa decode no arquivo binario e passa para texto.    
+            lista_transacoes = line.decode('utf-8')
+            lista_transacoes = lista_transacoes.strip()
+            lista_transacoes = lista_transacoes.split(',')
         
-        # Usa decode no arquivo binario e passa para texto.    
-        lista_transacoes = line.decode('utf-8')
-        lista_transacoes = lista_transacoes.strip()
-        lista_transacoes = lista_transacoes.split(',')
-
         # Transformar uma string em um objeto datetime
         # Usa a função 'make_aware' para corrigi o erro no time zone
         data =  datetime.fromisoformat(lista_transacoes[7])
@@ -86,7 +91,6 @@ def procura_transacoes_suspeitas(mes_procura):
     
     return transacoes_suspeitas
 
-
 def procura_agencias_suspeitas(mes_procura, tipo:str='origem' ):
 
     agencia = 'agencia_' + tipo
@@ -113,3 +117,38 @@ def procura_contas_suspeitas(mes_procura, tipo:str='destino'):
         data__month=mes_procura)
     
     return transacoes
+
+def ler_arquivo_xml(file):
+    """ Ler um arquivo xml e transforma em uma lista"""
+
+    file_xml = ET.parse(file)
+    root = file_xml.getroot()
+    cria_arquivo = []
+    for linha in root.iterfind('transacao'):
+   
+        origem = linha.find('origem')
+        destino = linha.find('destino')
+        banco_origem = origem.find('banco').text
+        agencia_origem = origem.find('agencia').text
+        conta_origem = origem.find('conta').text
+        banco_destino = destino.find('banco').text
+        agencia_destino = destino.find('agencia').text
+        conta_destino = destino.find('conta').text
+        valor_transacao = linha.find('valor').text
+        data = linha.find('data').text
+        
+        cria_arquivo.append(
+            [
+                banco_origem,
+                agencia_origem,
+                conta_origem,
+                banco_destino,
+                agencia_destino,
+                conta_destino,
+                valor_transacao,
+                data,
+            ]
+        )
+    
+    return cria_arquivo
+   

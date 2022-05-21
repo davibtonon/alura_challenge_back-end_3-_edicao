@@ -4,7 +4,7 @@ from django.core.validators import FileExtensionValidator
 
 class FormFileUpload(forms.Form):
 
-    arquivo = forms.FileField(validators=[FileExtensionValidator(['csv'])])
+    arquivo = forms.FileField(validators=[FileExtensionValidator(['csv', 'xml'])])
 
 
 class FormImportacoesRealizadas(ModelForm):
