@@ -14,9 +14,9 @@ small_blue_diamond: [Descrição do projeto](#descrição-do-projeto)
 
 small_blue_diamond: [Funcionalidades](#funcionalidades)
 
-:small_blue_diamond: [Deploy da Aplicação](#deploy-da-aplicação-dash)
+small_blue_diamond: [Deploy da Aplicação](#deploy-da-aplicação-dash)
 
-## Descrição do projeto 
+## Descrição do projeto
 
 Projeto em desenvolvimento para o desafio backend da Alura. Sistema para cadastro e análise de transações financeiras
 
@@ -39,7 +39,7 @@ Projeto em desenvolvimento para o desafio backend da Alura. Sistema para cadastr
 
 :warning: [Django-widget-](https://pypi.org/project/django-widget-tweaks/)
 
-A versão de cada bibliotece/lib poder ser consultada no arquivos requirements.txt
+A versão de cada bibliotece/lib poder ser consultada no arquivo **requirements.txt**.
 
 ## Como rodar a aplicação :arrow_forward:
 
@@ -61,7 +61,7 @@ Para ativa o ambiente virtual digite:
 source /venv/bin/activate
 ```
 
-Instale todas as dependências no arquivo **requiremenst.txt** com o camando abaixo:
+Instale todas as dependências do arquivo **requiremenst.txt** com o camando abaixo:
 
 ``` python
 python -m pip install -r requirements.txt
@@ -78,7 +78,7 @@ python manage.py runserver
 Abra o navegador no endereço abaixo e teste o sistema.:
 
 ``` python
- < http://127.0.0.1:8000/ >
+ http://127.0.0.1:8000/
 ```
 
 ## Desenvolvedores/Contribuintes :octocat:
