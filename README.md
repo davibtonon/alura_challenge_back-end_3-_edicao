@@ -30,3 +30,56 @@ Projeto em desenvolvimento para o desafio backend da Alura. Sistema para cadastr
 
 :heavy_check_mark: `Funcionalidade 4:` Ferramenta para análise de transações suspeita.
 
+
+## Pré-requisitos
+
+:warning: [Python](https://www.python.org/)
+
+:warning: [Django](https://www.djangoproject.com/)
+
+:warning: [Django-widget-](https://pypi.org/project/django-widget-tweaks/)
+
+A versão de cada bibliotece/lib poder ser consultada no arquivos requirements.txt
+
+## Como rodar a aplicação :arrow_forward:
+
+No terminal, clone o projeto: 
+
+```
+git clone https://github.com/davibtonon/alura_challenge_back-end_3-_edicao.git
+```
+
+Caso deseje cria um ambiente virtual digite o comandao abaixo no terminal:
+
+``` python
+python -m venv venv 
+```
+
+Para ativa o ambiente virtual digite:
+
+``` python
+source /venv/bin/activate
+```
+
+Instale todas as dependências no arquivo **requiremenst.txt** com o camando abaixo:
+
+``` python
+python -m pip install -r requirements.txt
+```
+
+**Para mais informações veja ->** [pip](https://pip.pypa.io/en/stable/user_guide/).
+
+Em seguida digite o comando abaixo para inicia o servidor:
+
+``` python
+python manage.py runserver
+```
+
+Abra o navegador no endereço abaixo e teste o sistema.:
+
+``` python
+ < http://127.0.0.1:8000/ >
+```
+
+## Desenvolvedores/Contribuintes :octocat:
+[Davi B Tonon](https://github.com/davibtonon)
