@@ -1,4 +1,5 @@
 import email
+from http import client
 from django.test import TestCase, RequestFactory, Client
 from apps.usuarios.views import login, cadastro, lista_usuarios
 from django.contrib.auth.models import User
@@ -59,7 +60,8 @@ class UsuariosUrlsTestcase(TestCase):
 
     def test_lista_de_usuarios(self):
         request = self.factory.get('lista_usuarios')
-        request = self.client.login()
+        self.client.login(password=self.user.password, username=self.user.username)
+        request = self.cliente.get('/lista_usuarios')
         with self.assertTemplateUsed('lista_usuarios.html'):
             response = lista_usuarios(request)
             self.assertEqual(response.status_code, 200)
