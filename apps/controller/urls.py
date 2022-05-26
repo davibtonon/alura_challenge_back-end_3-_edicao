@@ -1,9 +1,9 @@
 from django.urls import path
-from controller.views import index
+from controller.views import*
 
 urlpatterns = [
     path('', index, name='index'),
-    # path('importacoes_realizadas', views.importacoes_realizadas, name='importacoes_realizadas' ),
-    # path('transacoes_importadas/<int:importacao_id>', views.transacoes_importadas, name='transacoes_importadas'),
-    # path('analise_transacao/', views.analise_transacao, name='analise_transacao'),
+    path('importacoes_realizadas', importacoes_realizadas, name='importacoes_realizadas' ),
+    path('transacoes_importadas/<int:importacao_id>', transacoes_importadas, name='transacoes_importadas'),
+    path('analise_transacao/', analise_transacao, name='analise_transacao'),
 ]
